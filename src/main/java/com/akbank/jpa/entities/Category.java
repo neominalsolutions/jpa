@@ -1,9 +1,14 @@
 package com.akbank.jpa.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -15,15 +20,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "Categories")
+@Data
 public class Category {
 
   @Id
@@ -31,14 +32,15 @@ public class Category {
   @Column(name = "CategoryID")
   private int id;
 
-  @Column(name = "CategoryName", nullable = false)
-  private String name; // property ismini istediğimiz gibi seçebiliriz
+  @Column(name = "CategoryName")
+  private String categoryName;
 
-  // mappedBy diğer tablodaki source relation propery tanımlıyoruz
-  // bunu eklmez isek relation doğru kuramıyor
-  @JsonBackReference // circular referance yönetimini yap // mappedBy category olduğu için burada
-                     // back referance atribute tanımı yaptık
-  @OneToMany(mappedBy = "category")
-  private List<Product> products; // aynı referance sahip bir nesne varsa set bunun eklenmesini önler
+  // Json Circular Serialization hatasını önlemek için koyduk
+
+  // @JsonManagedReference
+  @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+  @JsonBackReference
+  @JsonInclude(JsonInclude.Include.NON_EMPTY)
+  private List<Product> products;
 
 }

@@ -24,21 +24,21 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
   // property ismi
   // ?1 gelicek olan parametrelerden 1.si
-  @Query("Select c from Category c where c.name like %?1%")
-  List<Category> findByCategoryNameLike(String name);
+  @Query("Select c from Category c where c.categoryName like %?1%")
+  List<Category> findByCategoryNameLike(String categoryName);
 
-  @Query("Select c from Category c where c.name like %:name%")
-  List<Category> findByCategoryNameLikeNamed(@Param("name") String name);
+  @Query("Select c from Category c where c.categoryName like %:categoryName%")
+  List<Category> findByCategoryNameLikeNamed(@Param("categoryName") String categoryName);
 
-  @Query("Select c from Category c where c.name = :name")
-  List<Category> findByCategoryNameEqual(@Param("name") String name);
+  @Query("Select c from Category c where c.categoryName = :categoryName")
+  List<Category> findByCategoryNameEqual(@Param("categoryName") String name);
 
-  @Query("Select c from Category c left join c.products")
+  @Query("Select c from Category c left join c.products p")
   List<Category> findCategoryWithProducts();
 
   // tablename Categories
-  // @Query(value = "Select * from Categories join Products on
-  // Categories.CategoryID = Products.CategoryID", nativeQuery = true)
-  // List<Category> findCategoryWithProductsNativeQuery();
+  // Bug Fix
+  @Query(value = "select c.* from Categories as c inner join Products as p on c.CategoryID= p.CategoryID ", nativeQuery = true)
+  List<Category> findCategoryWithProductsNativeQuery();
 
 }

@@ -63,11 +63,11 @@ public class QueryController {
 
   @GetMapping("categories")
   @ResponseBody // Json olarak result verebiliriz
-  public Optional<Category> Categories() {
+  public List<Category> Categories() {
 
     // findById sorgusunda Eager olarak döndürdük.
 
-    var clist = categoryRepository.findById(1);
+    // var clist = categoryRepository.findById(1);
 
     // var clist = categoryRepository.findAll();
 
@@ -83,13 +83,15 @@ public class QueryController {
 
     // clist = categoryRepository.findCategoryWithProducts();
 
-    // clist = categoryRepository.findCategoryWithProductsNativeQuery();
+    var clist = categoryRepository.findCategoryWithProductsNativeQuery();
 
-    var clist2 = categoryRepository.findCategoryWithProducts();
+    // var clist2 = categoryRepository.findCategoryWithProducts();
 
-    clist2 = categoryRepository.findCategoryWithProductsNativeQuery();
+    // clist2 = categoryRepository.findCategoryWithProductsNativeQuery();
 
-    System.out.println("productSize: " + clist2.get(2).getProducts().size());
+  
+
+    System.out.println("productSize: " + clist.get(3).getProducts().size());
 
     return clist;
   }

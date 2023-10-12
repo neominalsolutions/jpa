@@ -44,9 +44,10 @@ public class Product {
   @Column(name = "Discontinued", nullable = false)
   private Boolean discontinued;
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "CategoryId", nullable = false)
   @JsonManagedReference
+  // @JsonBackReference
   private Category category;
 
 }

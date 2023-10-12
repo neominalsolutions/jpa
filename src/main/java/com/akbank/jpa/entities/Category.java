@@ -37,10 +37,10 @@ public class Category {
 
   // Json Circular Serialization hatasını önlemek için koyduk
 
-  // @JsonManagedReference
-  @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+  //
+  @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
   @JsonBackReference
-  @JsonInclude(JsonInclude.Include.NON_EMPTY)
+  // @JsonManagedReference
   private List<Product> products;
 
 }

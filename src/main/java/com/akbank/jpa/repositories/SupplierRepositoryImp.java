@@ -68,7 +68,7 @@ public class SupplierRepositoryImp implements SupplierRespository {
   // transaction'ın rollback olmasını sağlamaz.
   // tüm hatalar runtime ve exception base sınıflarından türediği için.
   // bu sayede developer exceptionları yakalam fırsatı bulduk.
-  @Transactional(value = TxType.REQUIRED,rollbackOn = { RuntimeException.class })
+  @Transactional(value = TxType.REQUIRED, rollbackOn = { RuntimeException.class })
   public void deleteManuelTransaction(int id) {
 
     // var tran = entityManager.getTransaction(); // custom transaction yönetimi
@@ -91,6 +91,8 @@ public class SupplierRepositoryImp implements SupplierRespository {
       // TODO: handle exception
       // tran.rollback();
     }
+
+    // https://www.baeldung.com/spring-data-jpa-stored-procedures
 
   }
 
